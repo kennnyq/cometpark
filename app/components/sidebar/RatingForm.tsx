@@ -14,7 +14,8 @@ const RatingForm = forwardRef(({ color, lotName }: Props, ref) => {
   const [display, setDisplay] = useState<'block' | 'none'>('block')
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const jsConfetti = new JSConfetti()
+  // Created on first submit: JSConfetti needs `document`, which doesn't exist during server rendering.
+  const jsConfetti = useRef<JSConfetti | null>(null)
 
   const handleDivClick = () => {
     fileInputRef.current?.click()
@@ -59,7 +60,8 @@ const RatingForm = forwardRef(({ color, lotName }: Props, ref) => {
         setTimeout(() => {
           handleCancelImage()
           setRating(null)
-          jsConfetti.addConfetti()
+          jsConfetti.current ??= new JSConfetti()
+          jsConfetti.current.addConfetti()
         }, 1000)
       }}
     >
