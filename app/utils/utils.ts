@@ -36,6 +36,9 @@ export function timeAgo(isoDate: string): string {
 export function remapMarkers(pinataData: any, markerLocations: any) {
   console.log('Pinata Data:', pinataData)
   console.log('Marker Loco:', markerLocations)
+  // The loader returns { error } when Pinata is unavailable; keep the plain markers.
+  if (!Array.isArray(pinataData)) return markerLocations
+
   return markerLocations.map((marker: any) => {
     const markerKebabLocation = kebabCase(marker.location)
     let count = 0
