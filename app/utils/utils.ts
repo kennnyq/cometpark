@@ -66,8 +66,6 @@ export function remapMarkers(pinataData: any, markerLocations: any) {
         return
       }
 
-      console.log(imageName)
-
       validImages.push({
         imgName: imageName,
         rating: fileRating,
